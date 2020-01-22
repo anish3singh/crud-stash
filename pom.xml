@@ -23,8 +23,9 @@
     <properties>
         <log4j.version>2.7</log4j.version>
         <guice.version>4.1.0</guice.version>
-        <lombok.version>1.14.8</lombok.version>
         <pippo.version>1.12.0</pippo.version>
+        <lombok.version>1.14.8</lombok.version>
+        <lettuce.version>5.2.1.RELEASE</lettuce.version>
     </properties>
 
     <dependencies>
@@ -85,6 +86,17 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>${lettuce.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
