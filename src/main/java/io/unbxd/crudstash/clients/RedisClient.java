@@ -1,8 +1,7 @@
 package io.unbxd.crudstash.clients;
 
 import io.lettuce.core.RedisURI;
-import io.lettuce.core.cluster.RedisClusterClient;
-import io.lettuce.core.cluster.api.StatefulRedisClusterConnection;
+import io.lettuce.core.api.StatefulRedisConnection;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -14,19 +13,32 @@ import static io.unbxd.crudstash.constants.Constants.REDIS_PORT;
 @Slf4j
 public class RedisClient implements Client {
 
+    private static Client redisClient;
     private static final String HASH_NAME = "io.unbxd.data";
-    private static StatefulRedisClusterConnection<String, String> connection;
+    private static StatefulRedisConnection<String, String> connection;
 
-    public RedisClient() {
+    private RedisClient() {
         RedisURI redisURI = RedisURI.create(REDIS_HOST, REDIS_PORT);
-        RedisClusterClient redisClusterClient = RedisClusterClient.create(redisURI);
+        io.lettuce.core.RedisClient lettuceClient = io.lettuce.core.RedisClient.create(redisURI);
+        try {
+            connection = lettuceClient.connect();
+        } catch (Exception e) {
+            log.error("Error while initializing redis-client: ", e);
+        }
+    }
 
-        connection = redisClusterClient.connect();
+    public static Client getInstance() {
+        if(redisClient == null) {
+            redisClient = new RedisClient();
+        }
+        return redisClient;
     }
 
     @Override
     public void add(String id, String data) {
         Map<String, String> hash = new HashMap<>();
+        hash.put(id, data);
+
         connection.sync().hmset(HASH_NAME, hash);
     }
 

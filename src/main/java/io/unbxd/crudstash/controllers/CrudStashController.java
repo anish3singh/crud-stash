@@ -22,7 +22,7 @@ public class CrudStashController extends Controller {
         this.dao = dao;
     }
 
-    @GET("/crud-stash/getMe")
+    @GET("/crud-stash")
     public void getMe() {
         Response response = getResponse();
 
@@ -31,29 +31,36 @@ public class CrudStashController extends Controller {
     }
 
     @POST("/crud-stash/post-data")
-    public void dataPost() {
+    public void doPost() {
         String data = getRequest().getBody();
-        dao.addData(data);
-
         Response response = getResponse();
 
-        response.status(200);
-        response.send("Successfully inserted data into " + DB_NAME);
+        try {
+            dao.addData(data);
+            response.status(200);
+            response.send("Successfully inserted data into " + DB_NAME);
+        } catch(Exception e) {
+            response.status(500);
+            log.error("Error while inserting data into " + DB_NAME, e);
+            response.send("Unable to insert data into " + DB_NAME);
+        }
     }
 
     @GET("/crud-stash/get-data")
     public void getPost() {
         ParameterValue queryParam = getRequest().getQueryParameter("id");
         String[] idQueryParam = queryParam.getValues();
-
-        String responseData = "";
-        if(ArrayUtils.isNotEmpty(idQueryParam)) {
-            responseData = idQueryParam[0];
-        }
-
         Response response = getResponse();
 
-        response.status(200);
-        response.send(responseData);
+        if(ArrayUtils.isNotEmpty(idQueryParam)) {
+            try {
+                response.status(200);
+                response.send(dao.getData(idQueryParam[0]));
+            } catch(Exception e) {
+                response.status(500);
+                log.error("Error while fetching from " + DB_NAME, e);
+                response.send("Unable to fetch data form " + DB_NAME);
+            }
+        }
     }
 }
