@@ -1,3 +1,3 @@
 ## Crud-Stash Application
 
-Simple application to perform crud applications.
+Simple application to perform crud operations.
