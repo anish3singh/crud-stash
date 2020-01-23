@@ -22,7 +22,7 @@ public class CrudStashController extends Controller {
         this.dao = dao;
     }
 
-    @GET("/crud-stash")
+    @GET("/")
     public void getMe() {
         Response response = getResponse();
 
