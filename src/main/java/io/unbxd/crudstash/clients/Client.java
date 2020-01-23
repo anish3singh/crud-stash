@@ -11,7 +11,7 @@ public interface Client {
         if(DB_NAME.compareToIgnoreCase(REDIS_CLIENT_NAME) == 0) {
             return RedisClient.getInstance();
         } else if(DB_NAME.compareToIgnoreCase(MONGO_CLIENT_NAME) == 0) {
-            return null;
+            return MongoClient.getInstance();
         } else {
             return null;
         }

@@ -14,5 +14,6 @@ public interface Constants {
     int PORT = 8080;
     String DB_NAME = applicationProperties.getProperty("db.name");
     String REDIS_HOST = applicationProperties.getProperty("redis.host");
+    String MONGO_DB_HOST = applicationProperties.getProperty("mongo.db.host");
     int REDIS_PORT = parseInt(applicationProperties.getProperty("redis.port"));
 }
