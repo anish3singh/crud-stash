@@ -23,7 +23,7 @@ public class CrudStashController extends Controller {
     }
 
     @GET("/")
-    public void getMe() {
+    public void getIndexPage() {
         Response response = getResponse();
 
         response.status(200);
