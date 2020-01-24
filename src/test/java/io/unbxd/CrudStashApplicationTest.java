@@ -67,8 +67,10 @@ public class CrudStashApplicationTest extends PippoTest {
     @Test
     public void testDataPost() {
         String data = "Sample Mock Data 2";
-        Response response = given().body(data.getBytes()).when().post("/crud-stash/post-data");
+        Response response2 = when().post("/crud-stash/post-data");
+        Response response1 = given().body(data.getBytes()).when().post("/crud-stash/post-data");
 
-        response.then().statusCode(200);
+        response1.then().statusCode(200);
+        response2.then().statusCode(200);
     }
 }
