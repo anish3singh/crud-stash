@@ -47,6 +47,6 @@ public class MongoClient implements Client {
 
         FindIterable<Document> documents = collection.find(document);
         Document valueDocument = documents.iterator().next();
-        return valueDocument.toJson();
+        return valueDocument.getString("data");
     }
 }

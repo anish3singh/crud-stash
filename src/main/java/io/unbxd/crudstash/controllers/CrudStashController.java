@@ -22,8 +22,8 @@ public class CrudStashController extends Controller {
         this.dao = dao;
     }
 
-    @GET("/crud-stash")
-    public void getMe() {
+    @GET("/")
+    public void getIndexPage() {
         Response response = getResponse();
 
         response.status(200);
