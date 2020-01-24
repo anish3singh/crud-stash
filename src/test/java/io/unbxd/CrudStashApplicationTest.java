@@ -53,10 +53,10 @@ public class CrudStashApplicationTest extends PippoTest {
         response3.then().statusCode(200);
         response4.then().statusCode(404);
 
-        String fetchedData1 = response1.print();
-        String fetchedData2 = response2.print();
-        String fetchedData3 = response3.print();
-        String fetchedData4 = response4.print();
+        String fetchedData1 = response1.asString();
+        String fetchedData2 = response2.asString();
+        String fetchedData3 = response3.asString();
+        String fetchedData4 = response4.asString();
 
         assertEquals(data, fetchedData1);
         assertEquals(Strings.EMPTY , fetchedData2);
