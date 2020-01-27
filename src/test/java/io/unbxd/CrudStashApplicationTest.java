@@ -40,6 +40,7 @@ public class CrudStashApplicationTest extends PippoTest {
 
     @Test
     public void testDataFetch() {
+        String id3 = "unx021";
         String data = "Sample Mock Data";
         String id2 = UUID.randomUUID().toString();
         String id1 = "b9e1490d-aa18-4b17-a351-e21015643111";
@@ -47,16 +48,19 @@ public class CrudStashApplicationTest extends PippoTest {
         Response response3 = when().get("/crud-stash/get-data?id=");
         Response response1 = when().get("/crud-stash/get-data?id=" + id1);
         Response response2 = when().get("/crud-stash/get-data?id=" + id2);
+        Response response5 = when().get("/crud-stash/get-data?id=" + id3);
 
         response1.then().statusCode(200);
         response2.then().statusCode(200);
         response3.then().statusCode(200);
         response4.then().statusCode(404);
+        response5.then().statusCode(200);
 
         String fetchedData1 = response1.asString();
         String fetchedData2 = response2.asString();
         String fetchedData3 = response3.asString();
         String fetchedData4 = response4.asString();
+        String fetchedData5 = response5.asString();
 
         assertEquals(data, fetchedData1);
         assertEquals(Strings.EMPTY , fetchedData2);
@@ -66,11 +70,27 @@ public class CrudStashApplicationTest extends PippoTest {
 
     @Test
     public void testDataPost() {
-        String data = "Sample Mock Data 2";
+        String data1 = "Sample Mock Data 2";
+        String data2 = "{\n" +
+                "  \"name\": \"ujjwal\",\n" +
+                "  \"employeeId\": \"unx021\",\n" +
+                "  \"address\": \"Bangalore\",\n" +
+                "  \"designation\": \"software engineer\"\n" +
+                "}";
+        String data3 = "{\n" +
+                "  \"name\": \"ujjwal\",\n" +
+                "  \"employee\": \"unx021\",\n" +
+                "  \"address\": \"Bangalore\",\n" +
+                "  \"designation\": \"software engineer\"\n" +
+                "}";
         Response response2 = when().post("/crud-stash/post-data");
-        Response response1 = given().body(data.getBytes()).when().post("/crud-stash/post-data");
+        Response response1 = given().body(data1.getBytes()).when().post("/crud-stash/post-data");
+        Response response3 = given().body(data2.getBytes()).when().post("/crud-stash/post-data");
+        Response response4 = given().body(data3.getBytes()).when().post("/crud-stash/post-data");
 
-        response1.then().statusCode(200);
-        response2.then().statusCode(200);
+        response1.then().statusCode(500);
+        response2.then().statusCode(500);
+        response3.then().statusCode(200);
+        response4.then().statusCode(500);
     }
 }
